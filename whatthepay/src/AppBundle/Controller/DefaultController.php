@@ -27,7 +27,7 @@ class DefaultController extends Controller
         }
 
         if ($request->request->has('photo_toggle')) {
-            $photo = $this->getDoctrine()->getRepository('AppBundle:AccountPhoto')->find(dump($request->request->get('photo_toggle'))['id']);
+            $photo = $this->getDoctrine()->getRepository('AppBundle:AccountPhoto')->find($request->request->get('photo_toggle')['id']);
             $photo->setDisabled(filter_var($request->request->get('photo_toggle')['value'], FILTER_VALIDATE_BOOLEAN));
             $em->persist($photo);
             $em->flush();
