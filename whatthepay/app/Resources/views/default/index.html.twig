@@ -51,7 +51,7 @@
                                         &euro; {{ photo.amountLimit }}
                                         <div class="switch">
                                             <label>
-                                                <input type="checkbox" {{ photo.disabled ? '' : 'checked' }}>
+                                                <input data-id="{{ photo.id }}" type="checkbox" {{ photo.disabled ? '' : 'checked' }}>
                                                 <span class="lever"></span>
                                             </label>
                                         </div>
