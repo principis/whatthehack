@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/login.css') }}" rel="stylesheet" >
+{% endblock %}
+
+{% block body %}
+
+    <form action="{{ path('login') }}" method="post" class="form-signin">
+        <img class="" src="{{ asset('images/logo.png') }}" alt="" width="72" height="72">
+        <h3 class="">Please sign in</h3>
+        <div class="input-field col s12">
+            <input id="password" type="text" name="_username" class="validate" required autofocus>
+            <label for="password">Account ID</label>
+        </div>
+        <div class="input-field col s12">
+            <input id="password" type="password" name="_password" class="validate" required>
+            <label for="password">Password</label>
+        </div>
+
+        {% if error %}
+            <div class="card-panel red darken-4 white-text">
+            {{ error.message }}
+            </div>
+        {% endif %}
+        <button class="btn btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2019 FRID</p>
+    </form>
+
+{% endblock %}

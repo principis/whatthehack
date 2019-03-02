@@ -1,0 +1,12 @@
+{{ form_start(photo_form) }}
+            {{ form_row(photo_form.firstName, {'attr': {'placeholder': photo_form.firstName.vars.value}}) }}
+            {{ form_row(photo_form.lastName, {'attr': {'placeholder': ''}}) }}
+            {{ form_row(photo_form.isChild, {'attr': {'placeholder': ''}}) }}
+            {{ form_row(photo_form.amountLimit, {'attr': {'placeholder': ''}}) }}
+            {{ form_row(photo_form.disabled, {'attr': {'placeholder': ''}}) }}
+            {{ form_row(photo_form.disabledTo, {'attr': {'placeholder': ''}}) }}
+<div class="modal-footer">
+    <a href="#" onclick="deleteAccountPhoto({{ photo.id }})" class="waves-effect waves-red red btn-flat white-text">delete</a>
+    <button type="submit" class="waves-effect waves-green btn-flat">Submit</button>
+</div>
+{{ form_end(photo_form) }}

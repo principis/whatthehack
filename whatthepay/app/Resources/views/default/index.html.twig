@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <nav>
+        <div class="nav-wrapper">
+            <img height="100%" src="{{ asset('images/logo.png') }}">
+            <a href="#" class="brand-logo"> FRID</a>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+
+        <div class="row mt-4">
+            <div class="col s12 m4 l4">
+                <!-- Current Balance -->
+
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Information</span>
+                        <p>Name: {{ account }}</p>
+                        <p>ID: {{ account.client }}</p>
+                        <p>IBAN: {{ account.iban }}</p>
+                        <p>Email: {{ account.email }}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col s12 m8 l8">
+                <!-- Total Transaction -->
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <div class="valign-wrapper">
+                            <h4 class="card-title">
+                                <i class="material-icons">face</i>
+                                Face recognition
+                            </h4>
+                            <a href="#modalAddPhoto" style="margin-left: auto" class="btn-floating waves-effect waves-light red modal-trigger"><i class="material-icons">add</i></a>
+                        </div>
+                        {% if account.accountPhotos is not empty %}
+
+                        <ul class="collection">
+                            {% for photo in account.accountPhotos %}
+                            <li class="collection-item">
+                                <div class="valign-wrapper">
+                                    <div>
+                                        {{ photo }} {{ photo.registered ? '' : '<span class="badge red white-text">Not yet registered</span>' }}
+                                    </div>
+                                    <div style="margin-left: auto" class="valign-wrapper">
+                                        &euro; {{ photo.amountLimit }}
+                                        <div class="switch">
+                                            <label>
+                                                <input type="checkbox" {{ photo.disabled ? '' : 'checked' }}>
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
+                                        <a href="#" onclick="editAccountPhoto({{ photo.id }})" class="waves-effect waves-light btn-small">Edit</a>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                            {% else %}
+                            <p>No facial recognition registered</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <div class="card-content">
+                            <div class="card-title">
+                                Transactions
+                            </div>
+                            <ul class="collection">
+                            {% for trans in account.transactions %}
+                                <li class="collection-item {{ trans.refused ? 'red lighten-3' }}">
+                                    <div class="valign-wrapper">
+                                        <div>
+                                            <i class="material-icons">watch_later</i>{{ trans.transactionDate|date('d/m/Y H:i') }}
+                                            {% if not trans.refused %}
+                                            <i class="material-icons">perm_identity</i>{{ trans.accountPhoto.firstName }} {{ trans.accountPhoto.lastName }}
+                                            {% endif %}
+                                            <i class="material-icons">map</i> {{ trans.location }} <i class="material-icons">description</i> {{ trans.description }}
+                                        </div>
+                                        <div style="margin-left: auto">
+                                            <span class="badge blue white-text">&euro;{{ trans.amount }}</span>
+                                            {% if trans.refused %}
+                                                <span class="no-margin badge red white-text right">Photo not matched</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalAddPhoto" class="modal">
+        <div class="modal-content">
+            <h4>Add facial recognition user</h4>
+            {{ form_start(photo_form) }}
+            {{ form_row(photo_form.firstName) }}
+            {{ form_row(photo_form.lastName) }}
+            {{ form_row(photo_form.isChild) }}
+            {{ form_row(photo_form.amountLimit) }}
+            {{ form_row(photo_form.disabled) }}
+            {{ form_row(photo_form.disabledTo, {'attr': {'placeholder': ''}}) }}
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-green btn-flat">Submit</button>
+            </div>
+            {{ form_end(photo_form) }}
+        </div>
+    </div>
+
+    <div id="modalEditPhoto" class="modal">
+        <div class="modal-content">
+            <h4>Edit facial recognition user</h4>
+        </div>
+        <div class="form-div">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/index.js') }}"></script>
+{% endblock %}
