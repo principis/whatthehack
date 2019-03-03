@@ -35,7 +35,7 @@ def getConfidencePlain(req_face, match_face):
     match_against_face = facereg.load_image_file(match_face)
     match_against_face_encoding = facereg.face_encodings(match_against_face)[0]
 
-    return facereg.face_distance([requested_face_encoding], match_against_face_encoding)
+    return facereg.face_distance([requested_face_encoding], match_against_face_encoding)[0]
 
 
 def checkMatchPlain(req_face, match_face):
