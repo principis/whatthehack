@@ -22,3 +22,18 @@ function deleteAccountPhoto(id) {
         }
     });
 }
+
+function toggleAccountPhoto(id, value) {
+    $.ajax({
+        url: '/',
+        data: 'photo_toggle[id]=' + id + '&photo_toggle[value]=' + value,
+        type: "POST",
+        success: function (data) {
+            M.toast({html: data.data})
+        }
+    });
+}
+
+$(':checkbox').change(function () {
+   toggleAccountPhoto($(this).data('id'), !this.checked);
+});

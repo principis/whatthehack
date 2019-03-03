@@ -17,22 +17,33 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         // TODO add validation
         if ($request->request->has('photo_edit')) {
             $photo = $this->getDoctrine()->getRepository('AppBundle:AccountPhoto')->find($request->request->get('photo_edit'));
             $editForm = $this->createForm('AppBundle\Form\AccountPhotoType', $photo);
             return $this->json(array('isValid' => true, 'view' => $this->renderView('form/form.html.twig', array('photo_form' => $editForm->createView(), 'photo' => $photo))));
         }
+
+        if ($request->request->has('photo_toggle')) {
+            $photo = $this->getDoctrine()->getRepository('AppBundle:AccountPhoto')->find($request->request->get('photo_toggle')['id']);
+            $photo->setDisabled(filter_var($request->request->get('photo_toggle')['value'], FILTER_VALIDATE_BOOLEAN));
+            $em->persist($photo);
+            $em->flush();
+            return $this->json(array('isValid' => true, 'data' => $photo->isDisabled() ? 'Face recognition disabled!' : 'Face recognition enabled!'));
+
+        }
+
         /** @var Account $account */
         $account = $this->getDoctrine()
             ->getRepository('AppBundle:Account')
-            ->findOneByClient($this->getUser());
+            ->findOneByClient($this->getUser()->getUserName());
 
         if ($request->request->has('photo_delete')) {
             $photo = $this->getDoctrine()->getRepository('AppBundle:AccountPhoto')
                 ->find($request->request->get('photo_delete'));
 
-            $em = $this->getDoctrine()->getManager();
             $em->remove($photo);
             $em->flush();
             return $this->json(array('isValid' => true));
