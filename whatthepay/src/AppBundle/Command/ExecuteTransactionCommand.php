@@ -56,7 +56,7 @@ class ExecuteTransactionCommand extends Command
                                $input->getArgument('photo') . '" "' .
                                $input->getArgument('key') . '" "' . $accountPhoto->getPhotoHash() . '"', $out);
 
-                if ($out === "0") {
+                if ($out === '0') {
                     $trans = new Transaction();
                     $trans->setAccount($account);
                     $trans->setAmount($input->getArgument('amount'));

@@ -1,0 +1,23 @@
+{{ form_start(form) }}
+
+<div class="row no-margin">
+    <div class="input-field col s12">
+        <label>{{ form_label(form.image) }}</label>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Browse</span>
+                {{ form_widget(form.image) }}
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text"
+                       placeholder="Upload file" />
+            </div>
+        </div>
+    </div>
+    {{ form_row(form.token) }}
+</div>
+<div class="modal-footer">
+    <input name="id" type="hidden" value="{{ photo.id }}">
+    {{ form_row(form.submit, {'attr': {'class': 'waves-effect waves-green btn-flat'}}) }}
+</div>
+{{ form_end(form) }}

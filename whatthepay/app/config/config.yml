@@ -89,3 +89,12 @@ easy_admin:
             class: AppBundle\Entity\AccountPhoto
         Transaction:
             class: AppBundle\Entity\Transaction
+
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        product_image:
+            uri_prefix: /temp/test
+            upload_destination: '%kernel.project_dir%/../temp'
+            delete_on_remove: true

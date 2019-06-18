@@ -5,12 +5,11 @@ import numpy as np
 
 
 def checkMatch(face, key, face_encrypted):
-
     requested_face = facereg.load_image_file(face)
     requested_face_encoding = facereg.face_encodings(requested_face)[0]
 
-
-    compare = facereg.compare_faces([np.asarray(getFace(face_encrypted, key), dtype=np.float64)], requested_face_encoding)
+    compare = facereg.compare_faces([np.asarray(getFace(face_encrypted, key), dtype=np.float64)],
+                                    requested_face_encoding)
 
     if compare[0]:
         return 0
@@ -55,10 +54,11 @@ def getFace(face_encrypted, key):
 
 
 def main():
-        face = sys.argv[1]
-        key = sys.argv[2]
-        face_encrypted = sys.argv[3]
-        print(checkMatch(face, key, face_encrypted))
+    face = sys.argv[1]
+    key = sys.argv[2]
+    face_encrypted = sys.argv[3]
+    print(checkMatch(face, key, face_encrypted))
+
 
 if __name__ == "__main__":
     main()

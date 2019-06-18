@@ -4,7 +4,7 @@ import base64
 
 
 def encode(face, key):
-    if(len(key) != 32): return 1
+    if len(key) != 32: return 1
     face_object = facereg.load_image_file(face)
     face_encoding = facereg.face_encodings(face_object)[0]
     face_in_string = ' '.join(map(str, face_encoding))

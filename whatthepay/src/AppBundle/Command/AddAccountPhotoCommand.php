@@ -50,8 +50,9 @@ class AddAccountPhotoCommand extends Command
         $username = $input->getArgument('firstName') . '_' . $input->getArgument('lastName');
         $user = null;
         foreach($account->getAccountPhotos() as $accountPhoto) {
-            if ($accountPhoto->getUserName() === $username)
+            if ($accountPhoto->getUserName() === $username) {
                 $user = $accountPhoto;
+            }
         }
         $user->setIsRegistered(true);
 
